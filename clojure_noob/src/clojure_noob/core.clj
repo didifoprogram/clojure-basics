@@ -28,8 +28,6 @@
 (def letters
   ["a" "b" "c"])
 
-(letters)
-
 (get {:first-name "Charlie"
  :last-name "McFish"}
  :first-name)
@@ -63,7 +61,7 @@
 
 (conj '(1 2 3) 4)
 
-#{"a" 20 20}
+; #{"a" 20 20}
 
 (hash-set 1 2 3 3)
 
@@ -173,3 +171,30 @@
 (map #(str "Hi " %) ["diego" "jessica"])
 
 (#(str %1 " and " %2) "corn" "bread")
+
+(#(identity %&) 1 "one" :one)
+
+
+                                        ; Closure
+(defn inc-maker
+  "Custom incrementor"
+  [inc-by]
+  #(+ % inc-by))
+
+(def inc3 (inc-maker 3))
+
+(inc3 10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
