@@ -66,7 +66,50 @@
   (let [[pongo & dalmatians] dalmatian-list]
     [pongo dalmatians])
   ;=> ["Pongo" ("Perdita" "Puppy 1" "Puppy 2")]
+
+                                        ; Function into
+  (into [] (set [:a :a]))
+  (into [] (set ["a" "b"]))
+                                        ; Loop and recur
+  (loop [iteration 0]
+    (println (str "Iteration " iteration))
+    (if (> iteration 3)
+      (println "Goodbye")
+      (recur (inc iteration))))
+
+                                        ; Same thing with normal function
+  (defn recursive-printer
+    ([]
+     (recursive-printer 0)) ; If called with no parameter
+    ([iteration]            ; If called with paramater
+    (println iteration)
+    (if (> iteration 3)
+      (println "Goodbye!")
+      (recursive-printer (inc iteration)))))
+  (recursive-printer)
+
+                                        ; Regular expressions
+  (re-find #"^left-" "left-eye")
+  (re-find #"^left-" "cleft-eye")
+  (re-find #"left-" "cleft-eye")
   
+
+                                        ; Reduce
+  (reduce + [1 2 3])
+  (reduce + 10 [1 2 3])
+  
+                                        ; Better implementation
+
+  ;; Reduce (reduce f coll) (reduce f val coll)
+  (defn better-symmetrize-body-parts
+    "Expect a seq of maps that have a :name and :size"
+    [asym-body-parts]
+    (reduce (fn [final-body-parts part]
+              (into final-body-parts (set [part (matching-part part)])))
+            []
+            asym-body-parts))
+
+  (better-symmetrize-body-parts asym-hobbit-body-parts)
 
   
   )
